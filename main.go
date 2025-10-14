@@ -119,6 +119,7 @@ func main() {
 
 	arrayAndSliceDemo()
 	matrixDemo()
+	mapDemo()
 }
 
 // Functions
@@ -252,6 +253,27 @@ func arrayAndSliceDemo() {
 	arr2 := [5]int{10, 20, 30, 40, 50}
 	sliceFromArray := arr2[1:4] // elements from index 1 to 3
 	fmt.Printf("Slice from array: %v\n", sliceFromArray)
+
+	// Appending:
+	fruits := []string{"Apple", "Banana", "Cherry", "Date"}
+	fruits = append(fruits, "Elderberry")
+	fmt.Printf("Fruits: %v\n", fruits)
+	/*
+		Under the hood, Go is doubling the size of the slice when it runs out of capacity.
+		This is an implementation detail, but it's good to know for performance considerations.
+	*/
+
+	// Looping through an array or slice
+	for i, v := range fruits {
+		fmt.Printf("Fruit %d: %s\n", i, v)
+	}
+
+	// Multi-dimensional arrays (matrices)
+	matrix := [2][2]int{
+		{1, 2},
+		{3, 4},
+	}
+	fmt.Printf("Matrix: %v\n", matrix)
 }
 
 // Matrix:
@@ -261,4 +283,35 @@ func matrixDemo() {
 		{4, 5, 6},
 	}
 	fmt.Printf("Matrix: %v\n", matrix)
+}
+
+// Maps (dictionaries, hashmaps. Key-value pairs)
+func mapDemo() {
+	capitalCities := map[string]string{
+		"USA":     "Washington, D.C.",
+		"France":  "Paris",
+		"Japan":   "Tokyo",
+		"India":   "New Delhi",
+		"Germany": "Berlin",
+	}
+
+	capitalCities["Canada"] = "Ottawa" // Adding a new key-value pair
+	fmt.Printf("Capital of Canada: %s\n", capitalCities["Canada"])
+
+	// Deleting a key-value pair
+	delete(capitalCities, "Germany")
+	fmt.Printf("Capital cities after deletion: %v\n", capitalCities)
+
+	// Looping through a map
+	for country, city := range capitalCities {
+		fmt.Printf("The capital of %s is %s\n", country, city)
+	}
+
+	// Checking if a key exists
+	city, exists := capitalCities["France"]
+	if exists {
+		fmt.Printf("The capital of France is %s\n", city)
+	} else {
+		fmt.Println("France is not in the map")
+	}
 }
