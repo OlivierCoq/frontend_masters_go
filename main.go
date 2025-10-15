@@ -295,6 +295,16 @@ func mapDemo() {
 		"Germany": "Berlin",
 	}
 
+	// Map with two different types for key and value
+	ages := map[string]int{
+		"Alice": 30,
+		"Bob":   25,
+		"Eve":   35,
+	}
+
+	fmt.Printf("Capital Cities: %v\n", capitalCities)
+	fmt.Printf("Ages: %v\n", ages)
+
 	capitalCities["Canada"] = "Ottawa" // Adding a new key-value pair
 	fmt.Printf("Capital of Canada: %s\n", capitalCities["Canada"])
 
@@ -308,10 +318,25 @@ func mapDemo() {
 	}
 
 	// Checking if a key exists
-	city, exists := capitalCities["France"]
+	city, exists := capitalCities["Italy"]
 	if exists {
-		fmt.Printf("The capital of France is %s\n", city)
+		fmt.Printf("The capital of Italy is %s\n", city)
 	} else {
-		fmt.Println("France is not in the map")
+		fmt.Println("Italy is not in the map")
 	}
+
+	// Structs:
+	type Person struct {
+		Name string
+		Age  int
+		City string
+	}
+
+	olivier := Person{
+		Name: "Olivier",
+		Age:  32,
+		City: "Tampa",
+	}
+
+	fmt.Printf("Person: %+v\n", olivier) // %+v to print field names as well
 }
