@@ -120,6 +120,7 @@ func main() {
 	arrayAndSliceDemo()
 	matrixDemo()
 	mapDemo()
+	structsDemo()
 }
 
 // Functions
@@ -324,14 +325,17 @@ func mapDemo() {
 	} else {
 		fmt.Println("Italy is not in the map")
 	}
+}
 
-	// Structs:
-	type Person struct {
-		Name string
-		Age  int
-		City string
-	}
+// Structs (like objects in JS, classes in Python, POJOs in Java)
 
+type Person struct {
+	Name string
+	Age  int
+	City string
+}
+
+func structsDemo() {
 	olivier := Person{
 		Name: "Olivier",
 		Age:  32,
@@ -339,4 +343,82 @@ func mapDemo() {
 	}
 
 	fmt.Printf("Person: %+v\n", olivier) // %+v to print field names as well
+
+	// Anonymous struct
+	/*
+		Anonymous structs are useful for one-off data structures that don't need a named type.
+		They can be used for quick data grouping without the overhead of defining a new type.
+
+
+	*/
+	employee := struct {
+		Name string
+		Age  int
+		City string
+	}{
+		Name: "Jane",
+		Age:  28,
+		City: "New York",
+	}
+
+	fmt.Printf("Anonymous Person(Employee): %+v\n", employee)
+
+	// Nested structs
+	type Address struct {
+		Street string
+		City   string
+		State  string
+		Zip    string
+	}
+
+	type Employee struct {
+		Name    string
+		Age     int
+		Address Address
+	}
+
+	john := Employee{
+		Name: "John",
+		Age:  30,
+		Address: Address{
+			Street: "123 Main St",
+			City:   "Tampa",
+			State:  "FL",
+			Zip:    "33602",
+		},
+	}
+
+	fmt.Printf("Employee with Address: %+v\n", john)
+
+	/*
+		Note: Types can't be redeclared in the same scope. They can be redeclared in different functions or different packages.
+		Note: Structs are passed by value. To modify the original struct, use pointers. This means that the entire struct is copied when passed to a function.
+		For large structs, consider using pointers to avoid performance overhead.
+	*/
+
+	// Pointers:
+	modifyPersonName(&olivier, "Olivier Coq") // the & operator gets the memory address of the variable.
+	// Now olivier's name is modified
+	fmt.Printf("Modified Person: %+v\n", olivier)
+
+	x := 10
+	ptr := &x // ptr holds the memory address of x
+	fmt.Printf("Value of x: %d, Address of x: %p, Value at ptr: %d\n", x, ptr, *ptr)
+
+	// Using method with pointer receiver to modify the struct
+	olivier.modifyPersonAddress("Denver")
+}
+
+// Move this function to top-level (outside of structsDemo)
+// the * operator dereferences the pointer to access the value it points to. Without the *,
+// we would be modifying the pointer itself, not the value it points to.
+func modifyPersonName(p *Person, newName string) {
+	p.Name = newName
+}
+
+// This method only works with Person struct
+// Method with pointer receiver to modify the struct
+func (p *Person) modifyPersonAddress(newCity string) {
+	p.City = newCity
+	fmt.Printf("Address modified to: %+v\n", p)
 }
