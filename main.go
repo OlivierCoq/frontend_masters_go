@@ -394,6 +394,9 @@ func structsDemo() {
 		Note: Types can't be redeclared in the same scope. They can be redeclared in different functions or different packages.
 		Note: Structs are passed by value. To modify the original struct, use pointers. This means that the entire struct is copied when passed to a function.
 		For large structs, consider using pointers to avoid performance overhead.
+
+		Note: When passing a struct to a function by value, any modifications made to the struct within the function do not affect the original struct outside the function.
+		This is because the function receives a copy of the struct, and changes are made to that copy, not the original.
 	*/
 
 	// Pointers:
@@ -410,13 +413,16 @@ func structsDemo() {
 }
 
 // Move this function to top-level (outside of structsDemo)
-// the * operator dereferences the pointer to access the value it points to. Without the *,
-// we would be modifying the pointer itself, not the value it points to.
+
+/*
+The * operator dereferences the pointer to access the value it points to. Without the *,
+we would be modifying the pointer itself, not the value it points to.
+*/
 func modifyPersonName(p *Person, newName string) {
 	p.Name = newName
 }
 
-// This method only works with Person struct
+// Method receiver. This method only works with Person struct
 // Method with pointer receiver to modify the struct
 func (p *Person) modifyPersonAddress(newCity string) {
 	p.City = newCity
